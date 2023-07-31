@@ -1,4 +1,5 @@
 {
+  "start": "set PORT=8080 && react-scripts start",
   "name": "teams-networking-react",
   "version": "0.1.0",
   "private": true,
