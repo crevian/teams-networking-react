@@ -41,8 +41,42 @@ function AppHeader() {
   );
 }
 
+function ContentWrapper() {
+  return <div id="main">TODO table...</div>;
+}
+
+function AppFooter() {
+  return (
+    <footer>
+      <a
+        className="ïtem"
+        href="https://github.com/crevian/teams-networking"
+        target="_blank"
+      >
+        <span>👩‍💻</span>
+        <span>Source Code</span>
+      </a>
+      <span className="item">|</span>
+      <a
+        className="item"
+        href="https://github.com/nmatei/node-api"
+        target="_blank"
+      >
+        <span>📃</span>
+        <span>API docs</span>
+      </a>
+    </footer>
+  );
+}
+
 function App() {
-  return <AppHeader />;
+  return (
+    <>
+      <AppHeader />
+      <ContentWrapper />
+      <AppFooter />
+    </>
+  );
 }
 
 export default App;
