@@ -5,14 +5,7 @@ import {
   updateTeamRequest,
 } from "./middleware";
 import { type } from "os";
-
-type Team = {
-  id: string;
-  promotion: string;
-  members: string;
-  name: string;
-  url: string;
-};
+import { Team } from "./models";
 
 type RowProps = {
   team: Team;
