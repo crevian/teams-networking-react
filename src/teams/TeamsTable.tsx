@@ -15,6 +15,7 @@ type RowProps = {
 };
 type RowActions = {
   deleteTeam(id: string): void;
+  startEdit(team: Team): void;
 };
 
 function TeamRow(props: RowProps & RowActions) {
@@ -36,7 +37,13 @@ function TeamRow(props: RowProps & RowActions) {
         </a>
       </td>
       <td>
-        <button type="button" className="action-btn edit-btn">
+        <button
+          type="button"
+          className="action-btn edit-btn"
+          onClick={() => {
+            props.startEdit(props.team);
+          }}
+        >
           &#9998;
         </button>
         <button
@@ -56,20 +63,26 @@ function TeamRow(props: RowProps & RowActions) {
 type Props = {
   loading: boolean;
   teams: Team[];
+  team: Team;
 };
 type Actions = {
   deleteTeam(id: string): void;
+  startEdit(team: Team): void;
+  save(): void;
 };
 
 export function TeamsTable(props: Props & Actions) {
   return (
     <form
-      id="teamsForm"
       action=""
       method="get"
       className={props.loading ? "loading-mask" : ""}
+      onSubmit={(e) => {
+        e.preventDefault();
+        props.save();
+      }}
     >
-      <table id="teamsTable">
+      <table className="table-view">
         <colgroup>
           <col className="select-all-column" />
           <col style={{ width: "20%" }} />
@@ -98,6 +111,9 @@ export function TeamsTable(props: Props & Actions) {
               deleteTeam={function (id) {
                 props.deleteTeam(id);
               }}
+              startEdit={(team) => {
+                props.startEdit(team);
+              }}
             />
           ))}
         </tbody>
@@ -110,6 +126,7 @@ export function TeamsTable(props: Props & Actions) {
                 name="promotion"
                 placeholder="Enter promotion"
                 required
+                disabled={!!props.team.id}
               />
             </td>
             <td>
@@ -118,6 +135,7 @@ export function TeamsTable(props: Props & Actions) {
                 name="members"
                 placeholder="Enter members"
                 required
+                disabled={!!props.team.id}
               />
             </td>
             <td>
@@ -126,16 +144,33 @@ export function TeamsTable(props: Props & Actions) {
                 name="name"
                 placeholder="Enter name"
                 required
+                disabled={!!props.team.id}
               />
             </td>
             <td>
-              <input type="text" name="url" placeholder="Enter url" required />
+              <input
+                type="text"
+                name="url"
+                placeholder="Enter url"
+                required
+                disabled={!!props.team.id}
+              />
             </td>
             <td>
-              <button type="submit" className="action-btn" title="Add">
+              <button
+                type="submit"
+                className="action-btn"
+                title="Add"
+                disabled={!!props.team.id}
+              >
                 ➕
               </button>
-              <button type="reset" className="action-btn" title="Reset">
+              <button
+                type="reset"
+                className="action-btn"
+                title="Reset"
+                disabled={!!props.team.id}
+              >
                 ✖
               </button>
             </td>
@@ -150,6 +185,7 @@ type WrapperProps = {};
 type State = {
   loading: boolean;
   teams: Team[];
+  team: Team;
 };
 
 export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
@@ -158,6 +194,13 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
     this.state = {
       loading: true,
       teams: [],
+      team: {
+        id: "",
+        promotion: "",
+        members: "",
+        name: "",
+        url: "",
+      },
     };
   }
 
@@ -181,12 +224,20 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
       <TeamsTable
         loading={this.state.loading}
         teams={this.state.teams}
+        team={this.state.team}
         deleteTeam={async (id) => {
           this.setState({ loading: true });
           const status = await deleteTeamRequest(id);
           if (status.success) {
             this.loadTeams();
           }
+        }}
+        startEdit={(team) => {
+          console.info("start edit", team);
+          this.setState({ team });
+        }}
+        save={() => {
+          console.warn("save");
         }}
       />
     );
