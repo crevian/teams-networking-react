@@ -90,7 +90,7 @@ function EditTeamRow(props: EditRowProps & EditRowActions) {
         <input
           type="text"
           name="members"
-          value="${members}"
+          value={members}
           placeholder="Enter members"
           required
         />
@@ -99,7 +99,7 @@ function EditTeamRow(props: EditRowProps & EditRowActions) {
         <input
           type="text"
           name="name"
-          value="${name}"
+          value={name}
           placeholder="Enter name"
           required
         />
@@ -108,7 +108,7 @@ function EditTeamRow(props: EditRowProps & EditRowActions) {
         <input
           type="text"
           name="url"
-          value="${url}"
+          value={url}
           placeholder="Enter url"
           required
         />
@@ -312,6 +312,13 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
         }}
         inputChange={(value) => {
           console.info("input change", value);
+          this.setState((state) => {
+            const team = { ...state.team };
+            team.promotion = value;
+            return {
+              team,
+            };
+          });
         }}
         save={() => {
           console.warn("save");
