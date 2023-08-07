@@ -60,6 +60,67 @@ function TeamRow(props: RowProps & RowActions) {
   );
 }
 
+type EditRowProps = {
+  team: Team;
+};
+type EditRowActions = {
+  inputChange(value: string): void;
+};
+function EditTeamRow(props: EditRowProps & EditRowActions) {
+  const { id, promotion, members, name, url } = props.team;
+  return (
+    <tr>
+      <td style={{ textAlign: "center" }}>
+        <input type="checkbox" name="selected" value={id} />
+      </td>
+
+      <td>
+        <input
+          type="text"
+          name="promotion"
+          value={promotion}
+          placeholder="Enter promotion"
+          required
+          onChange={(e) => {
+            props.inputChange(e.target.value);
+          }}
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          name="members"
+          value="${members}"
+          placeholder="Enter members"
+          required
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          name="name"
+          value="${name}"
+          placeholder="Enter name"
+          required
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          name="url"
+          value="${url}"
+          placeholder="Enter url"
+          required
+        />
+      </td>
+      <td>
+        <button type="submit">💾</button>
+        <button type="reset">✖</button>
+      </td>
+    </tr>
+  );
+}
+
 type Props = {
   loading: boolean;
   teams: Team[];
@@ -68,6 +129,7 @@ type Props = {
 type Actions = {
   deleteTeam(id: string): void;
   startEdit(team: Team): void;
+  inputChange(value: string): void;
   save(): void;
 };
 
@@ -104,18 +166,30 @@ export function TeamsTable(props: Props & Actions) {
           </tr>
         </thead>
         <tbody>
-          {props.teams.map((team) => (
-            <TeamRow
-              key={team.id}
-              team={team}
-              deleteTeam={function (id) {
-                props.deleteTeam(id);
-              }}
-              startEdit={(team) => {
-                props.startEdit(team);
-              }}
-            />
-          ))}
+          {props.teams.map((team) => {
+            if (team.id === props.team.id) {
+              return (
+                <EditTeamRow
+                  key={team.id}
+                  team={props.team}
+                  inputChange={props.inputChange}
+                />
+              );
+            }
+
+            return (
+              <TeamRow
+                key={team.id}
+                team={team}
+                deleteTeam={function (id) {
+                  props.deleteTeam(id);
+                }}
+                startEdit={(team) => {
+                  props.startEdit(team);
+                }}
+              />
+            );
+          })}
         </tbody>
         <tfoot>
           <tr>
@@ -235,6 +309,9 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
         startEdit={(team) => {
           console.info("start edit", team);
           this.setState({ team });
+        }}
+        inputChange={(value) => {
+          console.info("input change", value);
         }}
         save={() => {
           console.warn("save");
