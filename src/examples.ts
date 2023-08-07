@@ -1,8 +1,6 @@
 let firstName = "yes";
 // firstName = false;
 
-export default null;
-
 function getConf() {
   return {
     name: "my conf",
@@ -10,3 +8,10 @@ function getConf() {
     ready: true,
   };
 }
+
+const conf = getConf();
+console.info(conf.name);
+
+// conf.ready = "not ready";
+
+export default null;
