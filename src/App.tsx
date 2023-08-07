@@ -1,6 +1,8 @@
 import React from "react";
-import logo from "./logo.svg";
+//import logo from "./logo.svg";
+import logo from "./images/network-team-icon.png";
 import "./App.css";
+import "./style.css";
 
 function App_old() {
   return (
@@ -23,8 +25,24 @@ function App_old() {
   );
 }
 
+function AppHeader() {
+  return (
+    <header>
+      <div id="header-wrapper">
+        <div id="myPicture">
+          <img src={logo} alt="poza" width="100" />
+        </div>
+        <div id="header-info">
+          <h1>Teams Networking</h1>
+          <h2>Crud operations example (Create, Read, Update, Delete)</h2>
+        </div>
+      </div>
+    </header>
+  );
+}
+
 function App() {
-  return <div>teams</div>;
+  return <AppHeader />;
 }
 
 export default App;
