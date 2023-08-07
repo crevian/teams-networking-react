@@ -1,5 +1,6 @@
 import React from "react";
 import { deleteTeamRequest, loadTeamsRequest } from "./middleware";
+import { type } from "os";
 
 type Team = {
   id: string;
@@ -11,12 +12,16 @@ type Team = {
 
 type RowProps = {
   team: Team;
+};
+type RowActions = {
   deleteTeam(id: string): void;
 };
 
-function TeamRow(props: RowProps) {
+function TeamRow(props: RowProps & RowActions) {
   const { id, promotion, members, name, url } = props.team;
-  const displayUrl = url.startsWith("https://github.com/") ? url.substring(19) : url;
+  const displayUrl = url.startsWith("https://github.com/")
+    ? url.substring(19)
+    : url;
   return (
     <tr>
       <td style={{ textAlign: "center" }}>
@@ -51,12 +56,19 @@ function TeamRow(props: RowProps) {
 type Props = {
   loading: boolean;
   teams: Team[];
+};
+type Actions = {
   deleteTeam(id: string): void;
 };
 
-export function TeamsTable(props: Props) {
+export function TeamsTable(props: Props & Actions) {
   return (
-    <form id="teamsForm" action="" method="get" className={props.loading ? "loading-mask" : ""}>
+    <form
+      id="teamsForm"
+      action=""
+      method="get"
+      className={props.loading ? "loading-mask" : ""}
+    >
       <table id="teamsTable">
         <colgroup>
           <col className="select-all-column" />
@@ -79,7 +91,7 @@ export function TeamsTable(props: Props) {
           </tr>
         </thead>
         <tbody>
-          {props.teams.map(team => (
+          {props.teams.map((team) => (
             <TeamRow
               key={team.id}
               team={team}
@@ -93,13 +105,28 @@ export function TeamsTable(props: Props) {
           <tr>
             <td></td>
             <td>
-              <input type="text" name="promotion" placeholder="Enter promotion" required />
+              <input
+                type="text"
+                name="promotion"
+                placeholder="Enter promotion"
+                required
+              />
             </td>
             <td>
-              <input type="text" name="members" placeholder="Enter members" required />
+              <input
+                type="text"
+                name="members"
+                placeholder="Enter members"
+                required
+              />
             </td>
             <td>
-              <input type="text" name="name" placeholder="Enter name" required />
+              <input
+                type="text"
+                name="name"
+                placeholder="Enter name"
+                required
+              />
             </td>
             <td>
               <input type="text" name="url" placeholder="Enter url" required />
@@ -130,7 +157,7 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
     super(props);
     this.state = {
       loading: true,
-      teams: []
+      teams: [],
     };
   }
 
@@ -139,11 +166,11 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
   }
 
   loadTeams() {
-    loadTeamsRequest().then(teams => {
+    loadTeamsRequest().then((teams) => {
       console.info("loaded", teams);
       this.setState({
         loading: false,
-        teams
+        teams,
       });
     });
   }
@@ -154,7 +181,7 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
       <TeamsTable
         loading={this.state.loading}
         teams={this.state.teams}
-        deleteTeam={async id => {
+        deleteTeam={async (id) => {
           this.setState({ loading: true });
           const status = await deleteTeamRequest(id);
           if (status.success) {
