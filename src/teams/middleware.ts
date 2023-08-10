@@ -1,7 +1,12 @@
 import { Team } from "./models";
 
+const loadUrl = "http://localhost:3000/teams-json";
+if (window.location.host === "crevian.github.io") {
+  loadUrl = "https://nmatei.github.io/teams-networking/data/teams.json";
+}
+
 export function loadTeamsRequest(): Promise<Team[]> {
-  return fetch("http://localhost:3000/teams-json", {
+  return fetch(loadUrl, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
