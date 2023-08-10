@@ -1,6 +1,6 @@
 import { Team } from "./models";
 
-const loadUrl = "http://localhost:3000/teams-json";
+let loadUrl = "http://localhost:3000/teams-json";
 if (window.location.host === "crevian.github.io") {
   loadUrl = "https://nmatei.github.io/teams-networking/data/teams.json";
 }
