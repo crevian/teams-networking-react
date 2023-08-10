@@ -1,7 +1,7 @@
 import { Team } from "./models";
 
 let loadUrl = "http://localhost:3000/teams-json";
-if (true || window.location.host === "crevian.github.io") {
+if (window.location.host === "crevian.github.io") {
   loadUrl = "teams.json";
 }
 
