@@ -1,8 +1,9 @@
+import { useState } from "react";
 import { TeamsTableWrapper } from "../teams/TeamsTable";
 
 export function ContentWrapper() {
-  console.warn("wrapper.render");
-  let search = "js";
+  const [search, setSearch] = useState("");
+  console.warn("wrapper.render", search);
 
   return (
     <div id="main">
@@ -16,7 +17,8 @@ export function ContentWrapper() {
           placeholder="Search..."
           onChange={(e) => {
             console.info("search", e.target.value);
-            search = e.target.value;
+            // search = e.target.value;
+            setSearch(e.target.value);
           }}
         />
         <label htmlFor="searchTeams">🔎</label>
