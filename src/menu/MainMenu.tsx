@@ -1,11 +1,14 @@
 import { useState } from "react";
 import "./menu.css";
+import { Page } from "../main/models";
 
-type Page = "home" | "todos" | "teams";
+type Props = {
+  activePage: Page;
+};
 
-export function MainMenu() {
+export function MainMenu(props: Props) {
   //   const active: string = "home";
-  const [active, setActive] = useState<Page>("home");
+  const [active, setActive] = useState<Page>(props.activePage);
 
   const elements = [
     { text: "Home", name: "home" },
