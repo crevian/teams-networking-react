@@ -1,26 +1,22 @@
 import "./menu.css";
 
 export function MainMenu() {
+  const active: string = "home";
   return (
     <ul id="top-menu-bar">
       <li>
-        <a href="#" data-page="home">
-          HOME
+        <a href="#home" className={active === "home" ? "active" : ""}>
+          Home
         </a>
       </li>
       <li>
-        <a href="#" data-page="skills">
-          SKILLS
+        <a href="#todos" className={active === "todos" ? "active" : ""}>
+          To Do's
         </a>
       </li>
       <li>
-        <a href="#" data-page="languages">
-          LANGUAGES
-        </a>
-      </li>
-      <li>
-        <a href="#" data-page="projects">
-          PROJECTS
+        <a href="#teams" className={active === "teams" ? "active" : ""}>
+          Teams
         </a>
       </li>
     </ul>
