@@ -1,8 +1,13 @@
 import "./style.css";
 import logo from "../images/network-team-icon.png";
 import { MainMenu } from "../menu/MainMenu";
+import { Page } from "../main/models";
 
-export default function AppHeader() {
+type Props = {
+  activePage: Page;
+};
+
+export default function AppHeader(props: Props) {
   return (
     <header>
       <div id="header-wrapper">
@@ -15,7 +20,7 @@ export default function AppHeader() {
         </div>
       </div>
 
-      <MainMenu />
+      <MainMenu activePage={props.activePage} />
     </header>
   );
 }
