@@ -19,6 +19,8 @@
   "scripts": {
     "start": "set PORT=8080 && react-scripts start",
     "build": "set BUILD_PATH=./docs&& set PUBLIC_URL=./&& react-scripts build",
+    "postbuild": "git add docs/*",
+    "deploy": "npm run build && git commit -m \"[build] new docs\" && git push",
     "original_build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
