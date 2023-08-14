@@ -1,9 +1,11 @@
 import { useState } from "react";
 import "./menu.css";
 
+type Page = "home" | "todos" | "teams";
+
 export function MainMenu() {
   //   const active: string = "home";
-  const [active, setActive] = useState("home");
+  const [active, setActive] = useState<Page>("home");
 
   return (
     <ul id="top-menu-bar">
